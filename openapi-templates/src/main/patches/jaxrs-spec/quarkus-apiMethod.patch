@@ -1,0 +1,13 @@
+--- libraries/quarkus/apiMethod.mustache	2024-03-11 02:25:18.000000000 -0500
++++ libraries/quarkus/apiMethod.new.mustache	2024-03-19 18:29:28.350640040 -0500
+@@ -40,6 +40,6 @@
+                 {{^vendorExtensions.x-java-is-response-void}}@org.eclipse.microprofile.openapi.annotations.media.Content(schema = @org.eclipse.microprofile.openapi.annotations.media.Schema(implementation = {{{baseType}}}.class{{#vendorExtensions.x-microprofile-open-api-return-schema-container}}, type = {{{.}}} {{/vendorExtensions.x-microprofile-open-api-return-schema-container}}{{#vendorExtensions.x-microprofile-open-api-return-unique-items}}, uniqueItems = true {{/vendorExtensions.x-microprofile-open-api-return-unique-items}})){{/vendorExtensions.x-java-is-response-void}}
+             }){{^-last}},{{/-last}}{{/responses}}
+         }){{/hasProduces}}{{/useMicroProfileOpenAPIAnnotations}}
+-    public {{#supportAsync}}CompletionStage<{{/supportAsync}}Response{{#supportAsync}}>{{/supportAsync}} {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>cookieParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{^-last}},{{/-last}}{{/allParams}}) {
+-        return {{#supportAsync}}CompletableFuture.supplyAsync(() -> {{/supportAsync}}Response.ok().entity("magic!").build(){{#supportAsync}}){{/supportAsync}};
+-    }
+\ No newline at end of file
++    public {{#supportAsync}}{{>returnAsyncTypeInterface}}{{/supportAsync}}{{^supportAsync}}{{#returnResponse}}RestResponse<{{/returnResponse}}{{>returnTypeInterface}}{{#returnResponse}}>{{/returnResponse}}{{/supportAsync}} {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>cookieParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{^-last}},{{/-last}}{{/allParams}}) {
++        return {{#supportAsync}}Uni.createFrom().item(() -> {{/supportAsync}}RestResponse.ok(){{#supportAsync}}){{/supportAsync}};
++    }

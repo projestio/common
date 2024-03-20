@@ -1,0 +1,2 @@
+== Projestio Common
+Provides common artifacts used across Projestio services

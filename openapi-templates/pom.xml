@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.github.projestio</groupId>
+    <artifactId>common-intermediate-parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath>../intermediate-parent</relativePath>
+  </parent>
+
+  <artifactId>common-openapi-templates</artifactId>
+
+  <name>Projestio Common - OpenAPI Generator Templates</name>
+  <description><![CDATA[
+    Template overrides for use with OpenAPI Generator, making interfaces
+    and models closer to standard Quarkus interfaces (eg, using RestResponse
+    instead of Response, to facilitate build-time determination of response
+    mappers)
+  ]]></description>
+
+  <properties>
+    <project.build.outputTimestamp>1</project.build.outputTimestamp>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.openapitools</groupId>
+        <artifactId>openapi-generator-core</artifactId>
+        <version>${version.openapi-generator-maven-plugin}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default-unpack</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.openapitools</groupId>
+                  <artifactId>openapi-generator</artifactId>
+                  <version>${version.openapi-generator-maven-plugin}</version>
+                  <type>jar</type>
+
+                  <includes>JavaJaxRS/spec/**/*.mustache</includes>
+
+                  <outputDirectory>
+                    ${project.build.outputDirectory}/
+                  </outputDirectory>
+                  <overWrite>false</overWrite>
+
+                  <fileMappers>
+                    <org.codehaus.plexus.components.io.filemappers.RegExpFileMapper>
+                      <pattern>\QJavaJaxRS/spec/\E</pattern>
+                      <replacement>./jaxrs-spec/</replacement>
+                    </org.codehaus.plexus.components.io.filemappers.RegExpFileMapper>
+                  </fileMappers>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-patch-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default-apply</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>apply</goal>
+            </goals>
+            <configuration>
+              <patchDirectory>src/main/patches/jaxrs-spec/</patchDirectory>
+              <targetDirectory>
+                ${project.build.outputDirectory}/jaxrs-spec/
+              </targetDirectory>
+              <naturalOrderProcessing>true</naturalOrderProcessing>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

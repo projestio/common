@@ -1,0 +1,36 @@
+openapi: 3.0.3
+info:
+  title: Projestio Common Types
+  version: ${project.version}
+  description: Common types used across Projestio services
+paths: { }
+components:
+  parameters:
+    pageNumber:
+      name: page
+      in: query
+      required: false
+      description: >-
+        Query parameter describing zero-indexed current page in a service that
+        paginates responses
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 0
+      example: 0
+    pageSize:
+      name: pageSize
+      in: query
+      description: >-
+        The maximum number of elements to include in a response page from a
+        service that paginates responses
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        default: 50
+      example: 50
+  responses:
+    EmptyResponse:
+      description: Response with no body

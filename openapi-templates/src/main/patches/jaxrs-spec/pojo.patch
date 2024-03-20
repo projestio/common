@@ -1,0 +1,18 @@
+--- pojo.mustache	2024-03-11 02:25:18.000000000 -0500
++++ pojo.new.mustache	2024-03-19 17:58:39.212935381 -0500
+@@ -6,6 +6,7 @@
+ import com.fasterxml.jackson.annotation.JsonCreator;
+ import com.fasterxml.jackson.annotation.JsonValue;
+ import com.fasterxml.jackson.annotation.JsonTypeName;
++import io.quarkus.runtime.annotations.RegisterForReflection;
+ 
+ {{#discriminator}}{{>typeInfoAnnotation}}{{/discriminator}}{{#description}}/**
+  * {{.}}
+@@ -17,6 +18,7 @@
+ {{#vendorExtensions.x-class-extra-annotation}}
+ {{{vendorExtensions.x-class-extra-annotation}}}
+ {{/vendorExtensions.x-class-extra-annotation}}
++@RegisterForReflection
+ public class {{classname}} {{#parent}}extends {{{.}}}{{/parent}} {{#vendorExtensions.x-implements}}{{#-first}}implements {{{.}}}{{/-first}}{{^-first}}, {{{.}}}{{/-first}}{{/vendorExtensions.x-implements}} {
+   {{#vars}}
+   {{#isEnum}}

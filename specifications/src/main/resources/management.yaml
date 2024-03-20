@@ -1,0 +1,211 @@
+openapi: 3.0.3
+info:
+  title: Projestio Management API
+  version: ${project.version}
+  description: API for management of Projestio services
+tags:
+  - name: Management
+paths:
+  /health:
+    get:
+      operationId: get-health
+      summary: Get Health
+      description: >-
+        Check overall health of a service
+      tags:
+        - Management
+      responses:
+        200:
+          $ref: '#/components/responses/HealthResponse'
+  /health/live:
+    get:
+      operationId: get-liveness-health
+      summary: Get Liveness Health
+      description: >-
+        Check liveness of a service
+      tags:
+        - Management
+      responses:
+        200:
+          $ref: '#/components/responses/HealthResponse'
+  /health/ready:
+    get:
+      operationId: get-readiness-health
+      summary: Get Readiness Health
+      description: >-
+        Check readiness of a service
+      tags:
+        - Management
+      responses:
+        200:
+          $ref: '#/components/responses/HealthResponse'
+  /info:
+    get:
+      operationId: get-info
+      summary: Get Info
+      description: >-
+        Get information of a service
+      tags:
+        - Management
+      responses:
+        200:
+          $ref: '#/components/responses/InfoResponse'
+components:
+  schemas:
+    Health:
+      description: Object describing the health of a service
+      type: object
+      required:
+        - status
+        - checks
+      properties:
+        status:
+          $ref: '#/components/schemas/HealthStatus'
+        checks:
+          type: array
+          items:
+            type: object
+      example:
+        status: UP
+        checks: []
+    HealthStatus:
+      description: >-
+        Health status (up or down); derived from
+        [Eclipse MicroProfile Health](https://github.com/eclipse/microprofile-health/blob/main/api/src/main/java/org/eclipse/microprofile/health/HealthCheckResponse.java)
+      type: string
+      enum:
+        - UP
+        - DOWN
+    Info:
+      description: >-
+        Container for various pieces of information about a service
+      type: object
+      required:
+        - build
+      properties:
+        git:
+          $ref: '#/components/schemas/InfoGit'
+        java:
+          $ref: '#/components/schemas/InfoJava'
+        os:
+          $ref: '#/components/schemas/InfoOperatingSystem'
+        build:
+          $ref: '#/components/schemas/InfoBuild'
+      example:
+        git:
+          branch: main
+          commit:
+            id: bd99e73df4164c4d0748dd5e2cce84d709972f71
+            time: 2024-02-29T16:28:31-06:00
+        java:
+          version: 21.0.2
+        os:
+          name: Linux
+          version: 6.7.6-200.fc39.x86_64
+          arch: amd64
+        build:
+          group: com.github.projestio
+          artifact: projestio-service
+          version: 1.0.0
+          time: 2024-03-11T00:42:49.977048628-06:00
+          quarkusVersion: 3.8.2
+          enabled: true
+    InfoGit:
+      description: >-
+        Information about the git repository of a service
+      properties:
+        branch:
+          description: The branch that was active at the time of build
+          type: string
+        commit:
+          $ref: '#/components/schemas/InfoGitCommit'
+      example:
+        branch: main
+        commit:
+          id: bd99e73df4164c4d0748dd5e2cce84d709972f71
+          time: 2024-02-29T16:28:31-06:00
+    InfoGitCommit:
+      description: >-
+        Information about the git commit
+      properties:
+        id:
+          description: Unique hash of the commit
+          type: string
+        time:
+          description: Time at which the commit was made
+          type: string
+          format: date-time
+      example:
+        id: bd99e73df4164c4d0748dd5e2cce84d709972f71
+        time: 2024-02-29T16:28:31-06:00
+    InfoJava:
+      description: >-
+        Information about the Java environment of a service
+      properties:
+        version:
+          description: The active Java version
+          type: string
+      example:
+        version: 21.0.2
+    InfoOperatingSystem:
+      description: >-
+        Information describing the current operating system of a service
+      properties:
+        name:
+          description: Name of the current operating system (eg, Linux)
+          type: string
+        version:
+          description: Version of the current operating system
+          type: string
+        arch:
+          description: Architecture of the CPU of the host computer
+          type: string
+      example:
+        name: Linux
+        version: 6.7.6-200.fc39.x86_64
+        arch: amd64
+    InfoBuild:
+      description: >-
+        Information about the build of a service
+      properties:
+        group:
+          description: Maven Group ID for the service
+          type: string
+        artifact:
+          description: Maven Artifact ID for the service
+          type: string
+        version:
+          description: Version that was built
+          type: string
+        time:
+          description: Time of the build
+          type: string
+          format: date-time
+        quarkusVersion:
+          description: Version of Quarkus that is used in the service
+          type: string
+        enabled:
+          description: Flag indicating whether build info is enabled
+          type: boolean
+      example:
+        group: com.github.projestio
+        artifact: projestio-service
+        version: 1.0.0
+        time: 2024-03-03T00:42:49.977048628-06:00
+        quarkusVersion: 3.8.2
+        enabled: true
+  responses:
+    HealthResponse:
+      description: >-
+        Response describing health of the service
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Health'
+    InfoResponse:
+      description: >-
+        Response describing health of the service
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Info'

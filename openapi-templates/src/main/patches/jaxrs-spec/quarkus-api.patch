@@ -1,0 +1,28 @@
+--- libraries/quarkus/api.mustache	2024-03-11 02:25:18.000000000 -0500
++++ libraries/quarkus/api.new.mustache	2024-03-19 18:18:34.843698377 -0500
+@@ -4,7 +4,7 @@
+ {{/imports}}
+
+ import {{javaxPackage}}.ws.rs.*;
+-import {{javaxPackage}}.ws.rs.core.Response;
++import org.jboss.resteasy.reactive.RestResponse;
+
+ {{#useGzipFeature}}
+ import org.jboss.resteasy.annotations.GZIP;
+@@ -15,8 +15,7 @@
+ {{/useSwaggerAnnotations}}
+
+ {{#supportAsync}}
+-import java.util.concurrent.CompletionStage;
+-import java.util.concurrent.CompletableFuture;
++import io.smallrye.mutiny.Uni;
+ {{/supportAsync}}
+
+ import java.io.InputStream;
+@@ -102,4 +101,4 @@
+ {{#interfaceOnly}}{{>apiInterface}}{{/interfaceOnly}}{{^interfaceOnly}}{{>apiMethod}}{{/interfaceOnly}}
+ {{/operation}}
+ }
+-{{/operations}}
+\ No newline at end of file
++{{/operations}}

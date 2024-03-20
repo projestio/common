@@ -1,0 +1,13 @@
+--- apiMethod.mustache	2024-03-11 02:25:18.000000000 -0500
++++ apiMethod.new.mustache	2024-03-19 18:32:36.999096695 -0500
+@@ -18,6 +18,6 @@
+     @ApiResponses(value = { {{#responses}}
+         @ApiResponse(code = {{{code}}}, message = "{{{message}}}", response = {{{baseType}}}.class{{#containerType}}, responseContainer = "{{{.}}}"{{/containerType}}){{^-last}},{{/-last}}{{/responses}}
+     }){{/useSwaggerAnnotations}}
+-    public {{#supportAsync}}CompletionStage<{{/supportAsync}}Response{{#supportAsync}}>{{/supportAsync}} {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>cookieParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{^-last}},{{/-last}}{{/allParams}}) {
+-        return {{#supportAsync}}CompletableFuture.supplyAsync(() -> {{/supportAsync}}Response.ok().entity("magic!").build(){{#supportAsync}}){{/supportAsync}};
+-    }
+\ No newline at end of file
++    public {{#supportAsync}}{{>returnAsyncTypeInterface}}{{/supportAsync}}{{^supportAsync}}{{#returnResponse}}RestResponse<{{/returnResponse}}{{>returnTypeInterface}}{{#returnResponse}}>{{/returnResponse}}{{/supportAsync}} {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>cookieParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{^-last}},{{/-last}}{{/allParams}}) {
++        return {{#supportAsync}}Uni.createFrom().item(() -> {{/supportAsync}}RestResponse.ok(){{#supportAsync}}){{/supportAsync}};
++    }

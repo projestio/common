@@ -1,0 +1,9 @@
+--- libraries/quarkus/apiInterface.mustache	2024-03-11 02:25:18.000000000 -0500
++++ libraries/quarkus/apiInterface.new.mustache	2024-03-19 18:23:06.985815386 -0500
+@@ -41,4 +41,4 @@
+             {{^vendorExtensions.x-java-is-response-void}}@org.eclipse.microprofile.openapi.annotations.media.Content(schema = @org.eclipse.microprofile.openapi.annotations.media.Schema(implementation = {{{baseType}}}.class{{#vendorExtensions.x-microprofile-open-api-return-schema-container}}, type = {{{.}}} {{/vendorExtensions.x-microprofile-open-api-return-schema-container}}{{#vendorExtensions.x-microprofile-open-api-return-unique-items}}, uniqueItems = true {{/vendorExtensions.x-microprofile-open-api-return-unique-items}})){{/vendorExtensions.x-java-is-response-void}}
+         }){{^-last}},{{/-last}}{{/responses}}
+     }){{/hasProduces}}{{/useMicroProfileOpenAPIAnnotations}}
+-    {{#supportAsync}}{{>returnAsyncTypeInterface}}{{/supportAsync}}{{^supportAsync}}{{#returnResponse}}Response{{/returnResponse}}{{^returnResponse}}{{>returnTypeInterface}}{{/returnResponse}}{{/supportAsync}} {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{^-last}},{{/-last}}{{/allParams}});
+\ No newline at end of file
++    {{#supportAsync}}{{>returnAsyncTypeInterface}}{{/supportAsync}}{{^supportAsync}}{{#returnResponse}}RestResponse<{{/returnResponse}}{{>returnTypeInterface}}{{#returnResponse}}>{{/returnResponse}}{{/supportAsync}} {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{^-last}},{{/-last}}{{/allParams}});

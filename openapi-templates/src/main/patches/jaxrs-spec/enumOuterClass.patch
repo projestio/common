@@ -1,0 +1,17 @@
+--- enumOuterClass.mustache	2024-03-11 02:25:18.000000000 -0500
++++ enumOuterClass.new.mustache	2024-03-19 18:09:32.036310629 -0500
+@@ -2,11 +2,13 @@
+ import com.fasterxml.jackson.annotation.JsonCreator;
+ import com.fasterxml.jackson.annotation.JsonValue;
+ {{/jackson}}
++import io.quarkus.runtime.annotations.RegisterForReflection;
+ 
+ /**
+  * {{description}}{{^description}}Gets or Sets {{{name}}}{{/description}}
+  */
+-{{>additionalEnumTypeAnnotations}}public enum {{{datatypeWithEnum}}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}} {
++{{>additionalEnumTypeAnnotations}}@RegisterForReflection
++public enum {{{datatypeWithEnum}}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}} {
+   {{#gson}}
+   {{#allowableValues}}{{#enumVars}}
+   @SerializedName({{#isInteger}}"{{/isInteger}}{{#isDouble}}"{{/isDouble}}{{#isLong}}"{{/isLong}}{{#isFloat}}"{{/isFloat}}{{{value}}}{{#isInteger}}"{{/isInteger}}{{#isDouble}}"{{/isDouble}}{{#isLong}}"{{/isLong}}{{#isFloat}}"{{/isFloat}})

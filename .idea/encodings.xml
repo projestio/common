@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/intermediate-parent/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/intermediate-parent/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/management-client-java/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/management-client-java/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/management-model/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/management-model/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/openapi-template-overrides/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/openapi-template-overrides/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/openapi-templates/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/openapi-templates/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/specifications/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/specifications/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

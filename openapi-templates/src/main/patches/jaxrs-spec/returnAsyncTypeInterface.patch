@@ -1,0 +1,6 @@
+--- returnAsyncTypeInterface.mustache	2024-03-19 17:29:07.830227271 -0500
++++ returnAsyncTypeInterface.new.mustache	2024-03-19 17:30:46.953988071 -0500
+@@ -1 +1 @@
+-CompletionStage<{{#returnResponse}}Response{{/returnResponse}}{{^returnResponse}}{{#returnContainer}}{{#isMap}}Map<String, {{{returnBaseType}}}>{{/isMap}}{{#isArray}}{{{returnContainer}}}<{{{returnBaseType}}}>{{/isArray}}{{/returnContainer}}{{^returnContainer}}{{{returnBaseType}}}{{/returnContainer}}{{/returnResponse}}>
+\ No newline at end of file
++Uni<{{#returnResponse}}RestResponse<{{/returnResponse}}{{#returnContainer}}{{#isMap}}Map<String, {{{returnBaseType}}}>{{/isMap}}{{#isArray}}{{{returnContainer}}}<{{{returnBaseType}}}>{{/isArray}}{{/returnContainer}}{{^returnContainer}}{{{returnBaseType}}}{{/returnContainer}}{{#returnResponse}}>{{/returnResponse}}>
